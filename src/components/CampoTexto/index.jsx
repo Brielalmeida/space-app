@@ -30,10 +30,10 @@ const InputStyled = styled.div`
     }
 `
 
-export const CampoTexto = () => {
+export const CampoTexto = ({setFiltro}) => {
   return (
     <InputStyled>
-        <input type='text' placeholder='O que você procura'/>
+        <input type='text' placeholder='O que você procura' onChange={(e) => setFiltro(e.target.value)}/>
         <img src={search}/>
     </InputStyled>
   )

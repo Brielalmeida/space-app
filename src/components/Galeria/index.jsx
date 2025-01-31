@@ -21,10 +21,10 @@ const FotoWrap = styled.div`
     `
 
 
-const Galeria = ({ fotos = [], aoFotoSelecionada, aoAlternarFavorito, aoFiltrar}) => {
+const Galeria = ({ fotos = [], aoFotoSelecionada, aoAlternarFavorito, aoFiltrar, setTag}) => {
   return (
     <>
-        <Tags aoFiltrar={aoFiltrar}/>
+        <Tags setTag={setTag}/>
         
         <GaleriaContainer>
             <SecaoFluida>

@@ -33,12 +33,12 @@ const BotoesContainer = styled.div`
     }
 `
 
-const Tags = ({aoFiltrar}) => {
+const Tags = ({setTag}) => {
   return (
     <TagContainer>
         <p>Busque por tags:</p>
         <BotoesContainer>
-            {tags.map(tag => <button onClick={() => aoFiltrar(tag.id)} key={tag.id}>{tag.titulo}</button>)}
+            {tags.map(tag => <button onClick={() => setTag(tag.id)} key={tag.id}>{tag.titulo}</button>)}
         </BotoesContainer>
     </TagContainer>
   )

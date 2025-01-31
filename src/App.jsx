@@ -5,7 +5,7 @@ import { BarraLateral } from "./components/BarraLateral";
 import Banner from "./components/Banner";
 import Galeria from "./components/Galeria";
 import fotos from './fotos.json'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalZoom from "./components/ModalZoom";
 import Footer from "./components/Footer";
 
@@ -40,13 +40,23 @@ const ConteudoGaleria = styled.section`
 
 function App() {
 
-  const [fotosFiltradas, setFotosFiltradas] = useState([])
   const [fotosGaleria, setFotosGaleria] = useState(fotos)
+  const [filtro, setFiltro] = useState('')
+  const [tag, setTag] = useState(0)
   const [fotoSelecionada, setFotoSelecionada] = useState(null)
 
   const onCloseFoto = () => {
     setFotoSelecionada(null)
   }
+
+  useEffect(()=>{
+    const fotosFiltradas = fotos.filter(foto=>{
+      const filtroPorTag = !tag || foto.tagId === tag;
+      const filtroPorTitulo = !filtro || foto.titulo.toLowerCase().includes(filtro.toLowerCase())
+      return filtroPorTag && filtroPorTitulo
+    })
+    setFotosGaleria(fotosFiltradas)
+  }, [filtro, tag])
 
   const aoAlternarFavorito = (foto) => {
 
@@ -63,7 +73,6 @@ function App() {
         favorita: !fotoSelecionada.favorita
       })
     }
-
     
   }
 
@@ -75,12 +84,12 @@ function App() {
     <FundoGradiente>
       <EstilosGlobais />
       <AppContainer>
-        <Cabecalho />
+        <Cabecalho setFiltro={setFiltro} />
         <MainContainer>
           <BarraLateral />
           <ConteudoGaleria>
             <Banner />
-            <Galeria aoFiltrar={aoFiltrar} aoFotoSelecionada={foto => setFotoSelecionada(foto)} fotos={fotosFiltradas.length > 0 ? fotosFiltradas : fotosGaleria} aoAlternarFavorito={aoAlternarFavorito}/>
+            <Galeria setTag={setTag} aoFotoSelecionada={foto => setFotoSelecionada(foto)} fotos={fotosGaleria} aoAlternarFavorito={aoAlternarFavorito}/>
           </ConteudoGaleria>
         </MainContainer>
       </AppContainer>
